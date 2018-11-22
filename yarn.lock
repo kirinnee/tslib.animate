@@ -103,6 +103,41 @@
   resolved "https://registry.yarnpkg.com/@kirinnee/core/-/core-0.7.3.tgz#ffb6e52578ebc50e7298b644238019f25e7f540e"
   integrity sha512-0RFfaMO3vdQ0ZBI+xsapF3Xnw26exeGuNCf8Ga5yGLn2LS69R6V+0UXmGAhjpB5b5h1/pB/y6G95lPLjxYd6eA==
 
+"@kirinnee/domex@0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@kirinnee/domex/-/domex-0.0.4.tgz#e186d5d7362121ec72ade0f008d889848f0277a3"
+  integrity sha512-EXdWss5tziZf2o4lECngV2Qi34bbY6Eer7xvWAzluyNPTXVQT8fdZ3kwEBnt3WKRazduL0poiQ3KoSBlOKDP/w==
+  dependencies:
+    "@babel/polyfill" "^7.0.0"
+    "@kirinnee/core" "^0.7.2"
+    dom4 "^2.1.3"
+
+"@kirinnee/domex@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@kirinnee/domex/-/domex-0.0.6.tgz#17c4d263163463a4bdaef0e2043c8a349cbbd140"
+  integrity sha512-WGV5U74rwiiHIjvEJfvhxQFeQ1HCDsSk9C9zPLhwC/MZOl/vQhNTYKlNh/GaVOElLyVEzhwKrElpqughHP2tDA==
+  dependencies:
+    "@babel/polyfill" "^7.0.0"
+    "@kirinnee/core" "^0.7.2"
+    dom4 "^2.1.3"
+
+"@kirinnee/elefact@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@kirinnee/elefact/-/elefact-0.0.2.tgz#476b0e32116761e93612ae74874e8e733c3685a4"
+  integrity sha512-7HOs45Z7skB27efnGtvNdu1FbhVehWd/k5ZMje+lAE2nclYCzTSY7pC7LmVBuNTChK1iQ4cQLz8Lh6QNfUbtuw==
+  dependencies:
+    "@babel/polyfill" "^7.0.0"
+    "@kirinnee/domex" "0.0.4"
+    dom4 "^2.1.3"
+
+"@kirinnee/kease@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@kirinnee/kease/-/kease-0.0.2.tgz#fe0302e4d344f215fdc5e6c23faa510f85187442"
+  integrity sha512-YIsp11R3/P0uOrqCPr9BzY+ruIJxHGYfY8lYSA/s1VRob4Dk3TleXIH5N+/gqskBFv1ypZQ3Tyf8e29juIsxsw==
+  dependencies:
+    "@types/gsap" "^1.20.0"
+    gsap "^2.0.2"
+
 "@types/chai@^4.1.6":
   version "4.1.7"
   resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.1.7.tgz#1b8e33b61a8c09cbe1f85133071baa0dbf9fa71a"
@@ -117,6 +152,11 @@
   version "1.3.18"
   resolved "https://registry.yarnpkg.com/@types/error-stack-parser/-/error-stack-parser-1.3.18.tgz#e01c9f8c85ca83b610320c62258b0c9026ade0f7"
   integrity sha1-4ByfjIXKg7YQMgxiJYsMkCat4Pc=
+
+"@types/gsap@^1.20.0":
+  version "1.20.0"
+  resolved "https://registry.yarnpkg.com/@types/gsap/-/gsap-1.20.0.tgz#131c3ce39d7e18c0278285ec58a1eb216936de59"
+  integrity sha512-kTIjuQWP5ot1kfX0lZ0lxc7VNTB7CDg9oMJPubS9UGM5e7uZ9rFj/0hvZoQjFk0u69T2pcOOsviA+vRhlV8SMA==
 
 "@types/html-minifier@*":
   version "3.5.2"
@@ -2820,6 +2860,11 @@ growl@1.10.5:
   version "1.10.5"
   resolved "https://registry.yarnpkg.com/growl/-/growl-1.10.5.tgz#f2735dc2283674fa67478b10181059355c369e5e"
   integrity sha512-qBr4OuELkhPenW6goKVXiv47US3clb3/IbuWF9KNKEijAy9oeHxU9IgzjvJhHkUzhaj7rOUD7+YGWqUjLp5oSA==
+
+gsap@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/gsap/-/gsap-2.0.2.tgz#c82bde9a078f7922869fc2eb5aaecfa7592d1c2b"
+  integrity sha512-WyT0uuDNb+5xMccx4SsVcI1CwvIL0BPgP8TyJJmMWT/btGXUNtKesnkXFMMshYs37renFhDo1P5NEoizeonviQ==
 
 gulp-clone@^2.0.1:
   version "2.0.1"
