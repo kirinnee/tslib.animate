@@ -6,6 +6,8 @@ import * as gsap from 'gsap';
 import {TweenLite} from 'gsap';
 import {EaseFactory, kEaseFactory} from "@kirinnee/kease";
 
+let text = require('gsap/TextPlugin');
+
 let core: Core = new Kore();
 core.ExtendPrimitives();
 
@@ -17,7 +19,7 @@ let eases: EaseFactory = new kEaseFactory(gsap);
 let eleFact: ElementFactory = new EleFact(domex, "k-space");
 
 
-let animator: SynchronousAnimator = new GSAPSyncAnimator(TweenLite, eases, eleFact, domex, core);
+let animator: SynchronousAnimator = new GSAPSyncAnimator(TweenLite, text, eases, eleFact, domex, core);
 let asyncAnimator: AsynchronousAnimator = new GSAPAsyncAnimator(animator);
 
 
