@@ -15,10 +15,7 @@ let domex: DOMEx = new DOMExtend(core);
 domex.ExtendPrimitives();
 
 let eases: EaseFactory = new kEaseFactory(gsap);
-
 let eleFact: ElementFactory = new EleFact(domex, "k-space");
-
-
 let animator: SynchronousAnimator = new GSAPSyncAnimator(TweenLite, text, eases, eleFact, domex, core);
 let asyncAnimator: AsynchronousAnimator = new GSAPAsyncAnimator(animator);
 
@@ -45,6 +42,7 @@ $("test-area").Append([specialBox, normalBox, textbox]).Style('float', 'left');
 $("starto")
 	.Click(async () => {
 		let ele = $("text-box");
+		
 		
 		await asyncAnimator.Wait(ele, {duration: 1000, callback: () => console.log('wait finished!')});
 		await asyncAnimator.AnimateText(ele, " my name is ernest", {duration: 1000, append: true});
