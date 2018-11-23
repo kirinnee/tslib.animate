@@ -1,4 +1,0 @@
--r ts-node/register
--r jsdom-global/register
---recursive
-./test/unit/**/*.spec.ts
