@@ -92,21 +92,20 @@ class GSAPAsyncAnimator implements AsynchronousAnimator {
 		return this.p("Y", [ori, to], e, data);
 	}
 	
-	private p(type: string, args: any[], e: Element, data?: AnimationData) {
-		return new Promise<Element>((resolve: (e: Element) => void) => {
-			let newData: AnimationData = this.t(data, e, resolve) as AnimationData;
-			let arg: any[] = [e].Add(args).Add(newData as any);
-			(this.sync as any)[type].apply(this.sync, arg);
-		});
+	Wait(e: Element, data?: AnimationData): Promise<Element> {
+		return this.p("Wait", [], e, data);
 	}
 	
-	private t(data: AnimationData = {}, e: Element, r: (e: Element) => void): AnimationData {
-		let original: Function = data.callback || (() => {});
-		data.callback = () => {
-			original();
-			r(e);
-		};
-		return data;
+	private p(type: string, args: any[], e: Element, data: AnimationData = {}) {
+		return new Promise<Element>((resolve: (e: Element) => void) => {
+			let original: Function = data.callback || (() => {});
+			data.callback = () => {
+				original();
+				resolve(e);
+			};
+			let arg: any[] = [e].Add(args).Add(data as any);
+			(this.sync as any)[type].apply(this.sync, arg);
+		});
 	}
 }
 

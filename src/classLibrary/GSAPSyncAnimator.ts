@@ -38,6 +38,11 @@ class GSAPSyncAnimator implements SynchronousAnimator {
 		this.c = core;
 	}
 	
+	Wait(e: Element, data: AnimationData = {}): Element {
+		let d: DefaultAnimationData = this.pa(data);
+		this.tl.to(e, d.duration, {onComplete: d.callback, immediateRender: true, ease: d.ease});
+		return e;
+	}
 	AnimateText(e: Element, text: string, data: TextAnimation = {}): Element {
 		let d: DefaultTextAnimationData = this.pt(data);
 		
