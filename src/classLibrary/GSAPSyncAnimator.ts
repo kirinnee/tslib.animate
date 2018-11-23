@@ -71,14 +71,12 @@ class GSAPSyncAnimator implements SynchronousAnimator {
 	X(e: Element, ori: string | number, to: string | number, data ?: AnimationData): Element {
 		return this.a(e, 'left', this.ts(ori), this.ts(to), data);
 	}
-	
 	Y(e: Element, ori: string | number, to: string | number, data ?: AnimationData): Element {
 		return this.a(e, 'top', this.ts(ori), this.ts(to), data);
 	}
 	H(e: Element, ori: string | number, to: string | number, data ?: AnimationData): Element {
 		return this.a(e, 'height', this.ts(ori), this.ts(to), data);
 	}
-	
 	W(e: Element, ori: string | number, to: string | number, data ?: AnimationData): Element {
 		return this.a(e, 'width', this.ts(ori), this.ts(to), data);
 	}
@@ -107,132 +105,113 @@ class GSAPSyncAnimator implements SynchronousAnimator {
 	Sepia(e: Element, ori: number, to: number, data ?: AnimationData): Element {
 		ori = ori.Clamp(0, 1);
 		to = to.Clamp(0, 1);
-		let target: Element = this.is(e) ? e.querySelector('.sepia-filter')! : e;
-		let ele: any = e;
-		let update = this.is(e) ? () => {
-			let s = ele.SecretFilterData.sepia;
-			target.Attr('values', `${0.393 + 0.607 * (1 - s)} ${0.769 - 0.769 * (1 - s)} ${0.189 - 0.189 * (1 - s)} 0 0
-                 ${0.349 - 0.349 * (1 - s)} ${0.686 + 0.314 * (1 - s)} ${0.168 - 0.168 * (1 - s)} 0 0
-                 ${0.272 - 0.272 * (1 - s)} ${0.534 - 0.534 * (1 - s)} ${0.131 + 0.869 * (1 - s)} 0 0
-                 0 0 0 1 0`)
-		} : () => {
-			let s: string = `sepia(${ele.SecretFilterData.sepia * 100}%)`;
-			target.Style('filter', s).Style('-webkit-filter', s);
-		};
-		
-		return this.af(e, 'sepia', ori.toString(), to.toString(), update, data);
+		let v = (s: number) => `${0.393 + 0.607 * (1 - s)} ${0.769 - 0.769 * (1 - s)} ${0.189 - 0.189 * (1 - s)} 0 0
+ ${0.349 - 0.349 * (1 - s)} ${0.686 + 0.314 * (1 - s)} ${0.168 - 0.168 * (1 - s)} 0 0
+${0.272 - 0.272 * (1 - s)} ${0.534 - 0.534 * (1 - s)} ${0.131 + 0.869 * (1 - s)} 0 0
+0 0 0 1 0`;
+		return this.af(e, "se", ori.toString(), to.toString(), '.sepia-filter', false, n => `${n * 100}%`, {values: v}, data);
 	}
 	
 	Saturate(e: Element, ori: number, to: number, data ?: AnimationData): Element {
-		let target: Element = this.is(e) ? e.querySelector('.saturate-filter')! : e;
-		let ele: any = e as any;
-		let update = this.is(e) ? () => target.Attr('values', ele.SecretFilterData.saturate) : () => {
-			let n: string = `saturate(${ele.SecretFilterData.saturate * 100}%)`;
-			target.Style('filter', n).Style('-webkit-filter', n);
-		};
-		return this.af(e, 'saturate', ori.toString(), to.toString(), update, data);
+		return this.af(e, "sa", ori.toString(), to.toString(), '.saturate-filter', false, n => `${n * 100}%`, {values: n => n}, data);
 	}
 	
 	Invert(e: Element, ori: number, to: number, data ?: AnimationData): Element {
 		ori = ori.Clamp(0, 1);
 		to = to.Clamp(0, 1);
-		let $ = (q: string): Element => e.querySelector('.negative-filter feFunc' + q)!;
-		let target: Element[] = this.is(e) ? [$('R'), $('G'), $('B')] : [e];
-		let ele: any = e;
-		let update: Function = this.is(e) ? () => {
-			let i: number = ele.SecretFilterData.invert;
-			let invert: string = `${i} ${1 - i}`;
-			target.Each(s => s.Attr('tableValues', invert));
-		} : () => {
-			let i: number = ele.SecretFilterData.invert;
-			let invert: string = `invert(${i * 100}%)`;
-			target.Each(s => s.Style('filter', invert).Style('-webkit-filter', invert));
-		};
-		return this.af(e, "invert", ori.toString(), to.toString(), update, data);
+		return this.af(e, "i", ori.toString(), to.toString(), '.negative-filter feFunc', true, n => `${n * 100}%`, {tableValues: n => `${n} ${1 - n}`}, data);
 	}
 	
 	Blur(e: Element, ori: number, to: number, data: AnimationData): Element {
-		let target: Element = this.is(e) ? e.querySelector('feGaussianBlur')! : e;
-		let ele: any = e as any;
-		let update = this.is(e) ? () => target.Attr('stdDeviation', ele.SecretFilterData.blur) : () => {
-			let n: string = `blur(${ele.SecretFilterData.blur}px)`;
-			target.Style('filter', n).Style('-webkit-filter', n);
-		};
-		return this.af(e, "blur", ori.toString(), to.toString(), update, data);
+		return this.af(e, "bl", ori.toString(), to.toString(), 'feGaussianBlur', false, n => `${n}px`, {stdDeviation: n => n}, data);
 		
 	}
 	
 	Greyscale(e: Element, ori: number, to: number, data ?: AnimationData): Element {
 		ori = ori.Clamp(0, 1);
 		to = to.Clamp(0, 1);
-		let target: Element = this.is(e) ? e.querySelector(".grayscale-filter")! : e;
-		let ele: any = e;
-		let update = this.is(e) ? () => {
-			let gs: number = ele.SecretFilterData.grayscale;
-			target.Attr('values', `${0.2126 + 0.7874 * (1 - gs)} ${0.7152 - 0.7152 * (1 - gs)} ${0.0722 - 0.0722 * (1 - gs)} 0 0
-	                 ${0.2126 - 0.2126 * (1 - gs)} ${0.7152 + 0.2848 * (1 - gs)} ${0.0722 - 0.0722 * (1 - gs)} 0 0
-	                 ${0.2126 - 0.2126 * (1 - gs)} ${0.7152 - 0.7152 * (1 - gs)} ${0.0722 + 0.9278 * (1 - gs)} 0 0
-	                 0 0 0 1 0`)
-		} : () => {
-			let gray: string = `grayscale(${ele.SecretFilterData.grayscale * 100}%)`;
-			ele.Style('filter', gray).Style('-webkit-filter', gray);
-		};
-		return this.af(e, "grayscale", ori.toString(), to.toString(), update, data);
+		let v = (gs: number) => `${0.2126 + 0.7874 * (1 - gs)} ${0.7152 - 0.7152 * (1 - gs)} ${0.0722 - 0.0722 * (1 - gs)} 0 0
+${0.2126 - 0.2126 * (1 - gs)} ${0.7152 + 0.2848 * (1 - gs)} ${0.0722 - 0.0722 * (1 - gs)} 0 0
+${0.2126 - 0.2126 * (1 - gs)} ${0.7152 - 0.7152 * (1 - gs)} ${0.0722 + 0.9278 * (1 - gs)} 0 0
+0 0 0 1 0`;
+		return this.af(e, "g", ori.toString(), to.toString(), '.grayscale-filter', false, n => `${n * 100}%`, {value: v}, data);
 	}
 	
 	HueRotation(e: Element, ori: number, to: number, data ?: AnimationData): Element {
-		
-		let target: Element = this.is(e) ? e.querySelector('.hue-rotate-filter')! : e;
-		let ele: any = e;
-		let update = this.is(e) ? () => target.Attr('values', `${ele.SecretFilterData.hue}`) : () => {
-			let hue: string = `hue-rotate(${ele.SecretFilterData.hue}deg)`;
-			ele.Style('filter', hue).Style('-webkit-filter', hue);
-		};
-		return this.af(e, "hue", ori.toString(), to.toString(), update, data);
+		return this.af(e, "hr", ori.toString(), to.toString(), '.hue-rotate-filter', false, n => `${n}deg`, {values: n => n}, data);
 	}
 	
 	Brightness(e: Element, ori: number, to: number, data ?: AnimationData): Element {
-		let $ = (q: string): Element => e.querySelector('.brightness-filter feFunc' + q)!;
-		let target: Element[] = this.is(e) ? [$('R'), $('G'), $('B')] : [e];
-		let ele: any = e as any;
-		let update = this.is(e) ? () => target.Each(s => s.Attr('slope', ele.SecretFilterData.bright)) : () => {
-			let n: string = `brightness(${ele.SecretFilterData.bright * 100}%)`;
-			target.Each(s => s.Style('filter', n).Style('-webkit-filter', n));
-		};
-		return this.af(e, "bright", ori.toString(), to.toString(), update, data);
+		return this.af(e, "br", ori.toString(), to.toString(), '.brightness-filter feFunc', true, n => `${n * 100}%`, {slope: n => n}, data);
 	}
 	
 	Contrast(e: Element, ori: number, to: number, data ?: AnimationData): Element {
-		let $ = (q: string): Element => e.querySelector('.contrast-filter feFunc' + q)!;
-		let target: Element[] = this.is(e) ? [$('R'), $('G'), $('B')] : [e];
-		let ele: any = e as any;
-		let update = this.is(e) ? () => {
-			let contrast: number = ele.SecretFilterData.contrast;
-			let val: string = `${0.5 - 0.5 * contrast}`;
-			target.Each(s => s.Attr('slope', `${contrast}`).Attr('intercept', val));
-		} : () => {
-			let n: string = `contrast(${ele.SecretFilterData.contrast * 100}%)`;
-			target.Each(s => s.Style('filter', n).Style('-webkit-filter', n));
+		let svgTransform: { [s: string]: (n: number) => any } = {
+			slope: n => n.toString(), intercept: n => `${0.5 - 0.5 * n}`
 		};
-		return this.af(e, "contrast", ori.toString(), to.toString(), update, data);
+		return this.af(e, "c", ori.toString(), to.toString(), '.contrast-filter feFunc', true, n => `${n * 100}%`, svgTransform, data);
+		
 	}
 	
+	
+	/**
+	 * Animate Filter
+	 */
+	private af(e: Element, type: string, ori: string, to: string, query: string, rgb: boolean, cssTransform: (n: number) => string, svgTransform: { [s: string]: (n: number) => any }, data: AnimationData = {}): Element {
+		this.s(e);
+		let def: DefaultAnimationData = this.pa(data);
+		let filters: any = (e as any).SecretFilterData;
+		filters[type] = ori;
+		
+		let $ = (q: string): Element => e.querySelector(q)!;
+		let _ = (q: string): Element[] => [$(q + 'R'), $(q + 'G'), $(q + 'B')];
+		let target: Element[] = this.is(e) ? rgb ? _(query) : [$(query)] : [e];
+		
+		
+		let update = this.is(e) ? () => {
+			let i = filters[type];
+			target.Each(s => {
+				for (let k in svgTransform) {
+					s.Attr(k, svgTransform[k](i));
+				}
+			});
+		} : () => {
+			let i = filters[type];
+			target.Each(s => s.Style('filter', `${this.m(type)}(${cssTransform(i)})`));
+		};
+		
+		let animationData: any = {
+			ease: def.ease, immediateRender: true, onComplete: def.callback, onUpdate: update,
+		};
+		animationData[type] = to;
+		this.tl.to(filters, def.duration, animationData);
+		return e;
+	}
 	/**
 	 * Maps filter to CSS filter
 	 */
-	// private m(e:string):string{
-	// 	switch(e){
-	// 		case "hr": return "hue-rotate";
-	// 		case "bl": return "blur";
-	// 		case "br": return "brightness";
-	// 		case "i": return "invert";
-	// 		case "se": return "sepia";
-	// 		case "sa": return "saturate";
-	// 		case "g": return "grayscale";
-	// 		case "c": return "constrast";
-	// 		default : throw new Error("Unknown filter: "+e);
-	// 	}
-	// }
+	private m(e: string): string {
+		switch (e) {
+			case "hr":
+				return "hue-rotate";
+			case "bl":
+				return "blur";
+			case "br":
+				return "brightness";
+			case "i":
+				return "invert";
+			case "se":
+				return "sepia";
+			case "sa":
+				return "saturate";
+			case "g":
+				return "grayscale";
+			case "c":
+				return "contrast";
+			default :
+				throw new Error("Unknown filter: " + e);
+		}
+	}
 	
 	/**
 	 * Parse transform data
@@ -304,22 +283,6 @@ class GSAPSyncAnimator implements SynchronousAnimator {
 		return this.c.IsString(e.Attr('elefact-special-element-filter'));
 	}
 	
-	/**
-	 * Animate Filter
-	 */
-	private af(e: Element, type: string, ori: string, to: string, update: Function, data: AnimationData = {}): Element {
-		this.s(e);
-		let def: DefaultAnimationData = this.pa(data);
-		let filters: any = (e as any).SecretFilterData;
-		filters[type] = ori;
-		
-		let animationData: any = {
-			ease: def.ease, immediateRender: true, onComplete: def.callback, onUpdate: update,
-		};
-		animationData[type] = to;
-		this.tl.to(filters, def.duration, animationData);
-		return e;
-	}
 	
 	/**
 	 * Convert to px is number

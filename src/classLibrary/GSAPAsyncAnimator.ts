@@ -9,154 +9,98 @@ class GSAPAsyncAnimator implements AsynchronousAnimator {
 	}
 	
 	AnimateText(e: Element, text: string, data?: TextAnimation): Promise<Element> {
-		return new Promise<Element>((resolve: (e: Element) => void) => {
-			let newData: TextAnimation = this.t(data, e, resolve) as TextAnimation;
-			this.sync.AnimateText(e, text, newData);
-		});
+		return this.p("AnimateText", [text], e, data);
 	}
 	
 	BackgroundColor(e: Element, ori: string, to: string, data?: AnimationData): Promise<Element> {
-		return new Promise<Element>((resolve: (e: Element) => void) => {
-			let newData: AnimationData = this.t(data, e, resolve) as AnimationData;
-			this.sync.BackgroundColor(e, ori, to, newData);
-		});
+		return this.p("BackgroundColor", [ori, to], e, data);
 	}
 	
 	Blur(e: Element, ori: number, to: number, data?: AnimationData): Promise<Element> {
-		return new Promise<Element>((resolve: (e: Element) => void) => {
-			let newData: AnimationData = this.t(data, e, resolve) as AnimationData;
-			this.sync.Blur(e, ori, to, newData);
-		});
+		return this.p("Blur", [ori, to], e, data);
 	}
 	
 	Brightness(e: Element, ori: number, to: number, data?: AnimationData): Promise<Element> {
-		return new Promise<Element>((resolve: (e: Element) => void) => {
-			let newData: AnimationData = this.t(data, e, resolve) as AnimationData;
-			this.sync.Brightness(e, ori, to, newData);
-		});
+		return this.p("Brightness", [ori, to], e, data);
 	}
 	
 	Contrast(e: Element, ori: number, to: number, data?: AnimationData): Promise<Element> {
-		return new Promise<Element>((resolve: (e: Element) => void) => {
-			let newData: AnimationData = this.t(data, e, resolve) as AnimationData;
-			this.sync.Contrast(e, ori, to, newData);
-		});
+		return this.p("Contrast", [ori, to], e, data);
 	}
 	
 	FontColor(e: Element, ori: string, to: string, data?: AnimationData): Promise<Element> {
-		return new Promise<Element>((resolve: (e: Element) => void) => {
-			let newData: AnimationData = this.t(data, e, resolve) as AnimationData;
-			this.sync.FontColor(e, ori, to, newData);
-		});
+		return this.p("FontColor", [ori, to], e, data);
 	}
 	
 	Greyscale(e: Element, ori: number, to: number, data?: AnimationData): Promise<Element> {
-		return new Promise<Element>((resolve: (e: Element) => void) => {
-			let newData: AnimationData = this.t(data, e, resolve) as AnimationData;
-			this.sync.Greyscale(e, ori, to, newData);
-		});
+		return this.p("Greyscale", [ori, to], e, data);
 	}
 	
 	H(e: Element, ori: string | number, to: string | number, data?: AnimationData): Promise<Element> {
-		return new Promise<Element>((resolve: (e: Element) => void) => {
-			let newData: AnimationData = this.t(data, e, resolve) as AnimationData;
-			this.sync.H(e, ori, to, newData);
-		});
+		return this.p("H", [ori, to], e, data);
 	}
 	
 	HueRotation(e: Element, ori: number, to: number, data?: AnimationData): Promise<Element> {
-		return new Promise<Element>((resolve: (e: Element) => void) => {
-			let newData: AnimationData = this.t(data, e, resolve) as AnimationData;
-			this.sync.HueRotation(e, ori, to, newData);
-		});
+		return this.p("HueRotation", [ori, to], e, data);
 	}
 	
 	Invert(e: Element, ori: number, to: number, data?: AnimationData): Promise<Element> {
-		return new Promise<Element>((resolve: (e: Element) => void) => {
-			let newData: AnimationData = this.t(data, e, resolve) as AnimationData;
-			this.sync.Invert(e, ori, to, newData);
-		});
+		return this.p("Invert", [ori, to], e, data);
 	}
 	
 	Opacity(e: Element, ori: number, to: number, data?: AnimationData): Promise<Element> {
-		return new Promise<Element>((resolve: (e: Element) => void) => {
-			let newData: AnimationData = this.t(data, e, resolve) as AnimationData;
-			this.sync.Opacity(e, ori, to, newData);
-		});
+		return this.p("Opacity", [ori, to], e, data);
 	}
 	
 	Rotate(e: Element, ori: number, to: number, data?: AnimationData): Promise<Element> {
-		return new Promise<Element>((resolve: (e: Element) => void) => {
-			let newData: AnimationData = this.t(data, e, resolve) as AnimationData;
-			this.sync.Rotate(e, ori, to, newData);
-		});
+		return this.p("Rotate", [ori, to], e, data);
 	}
 	
 	Saturate(e: Element, ori: number, to: number, data?: AnimationData): Promise<Element> {
-		return new Promise<Element>((resolve: (e: Element) => void) => {
-			let newData: AnimationData = this.t(data, e, resolve) as AnimationData;
-			this.sync.Saturate(e, ori, to, newData);
-		});
+		return this.p("Saturate", [ori, to], e, data);
 	}
 	
 	ScaleX(e: Element, ori: number, to: number, data?: AnimationData): Promise<Element> {
-		return new Promise<Element>((resolve: (e: Element) => void) => {
-			let newData: AnimationData = this.t(data, e, resolve) as AnimationData;
-			this.sync.ScaleX(e, ori, to, newData);
-		});
+		return this.p("ScaleX", [ori, to], e, data);
 	}
 	
 	ScaleY(e: Element, ori: number, to: number, data?: AnimationData): Promise<Element> {
-		return new Promise<Element>((resolve: (e: Element) => void) => {
-			let newData: AnimationData = this.t(data, e, resolve) as AnimationData;
-			this.sync.ScaleY(e, ori, to, newData);
-		});
+		return this.p("ScaleY", [ori, to], e, data);
 	}
 	
 	Sepia(e: Element, ori: number, to: number, data?: AnimationData): Promise<Element> {
-		return new Promise<Element>((resolve: (e: Element) => void) => {
-			let newData: AnimationData = this.t(data, e, resolve) as AnimationData;
-			this.sync.Sepia(e, ori, to, newData);
-		});
+		return this.p("Sepia", [ori, to], e, data);
 	}
 	
 	SkewX(e: Element, ori: number, to: number, data?: AnimationData): Promise<Element> {
-		return new Promise<Element>((resolve: (e: Element) => void) => {
-			let newData: AnimationData = this.t(data, e, resolve) as AnimationData;
-			this.sync.SkewX(e, ori, to, newData);
-		});
+		return this.p("SkewX", [ori, to], e, data);
 	}
 	
 	SkewY(e: Element, ori: number, to: number, data?: AnimationData): Promise<Element> {
-		return new Promise<Element>((resolve: (e: Element) => void) => {
-			let newData: AnimationData = this.t(data, e, resolve) as AnimationData;
-			this.sync.SkewY(e, ori, to, newData);
-		});
+		return this.p("SkewY", [ori, to], e, data);
 	}
 	
 	W(e: Element, ori: string | number, to: string | number, data?: AnimationData): Promise<Element> {
-		return new Promise<Element>((resolve: (e: Element) => void) => {
-			let newData: AnimationData = this.t(data, e, resolve) as AnimationData;
-			this.sync.W(e, ori, to, newData);
-		});
+		return this.p("W", [ori, to], e, data);
 	}
 	
 	X(e: Element, ori: string | number, to: string | number, data?: AnimationData): Promise<Element> {
-		return new Promise<Element>((resolve: (e: Element) => void) => {
-			let newData: AnimationData = this.t(data, e, resolve) as AnimationData;
-			this.sync.X(e, ori, to, newData);
-		});
+		return this.p("X", [ori, to], e, data);
 	}
 	
 	Y(e: Element, ori: string | number, to: string | number, data?: AnimationData): Promise<Element> {
+		return this.p("Y", [ori, to], e, data);
+	}
+	
+	private p(type: string, args: any[], e: Element, data?: AnimationData) {
 		return new Promise<Element>((resolve: (e: Element) => void) => {
 			let newData: AnimationData = this.t(data, e, resolve) as AnimationData;
-			this.sync.Y(e, ori, to, newData);
+			let arg: any[] = [e].Add(args).Add(newData as any);
+			(this.sync as any)[type].apply(this.sync, arg);
 		});
 	}
 	
 	private t(data: AnimationData = {}, e: Element, r: (e: Element) => void): AnimationData {
-		
 		let original: Function = data.callback || (() => {});
 		data.callback = () => {
 			original();

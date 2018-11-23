@@ -29,7 +29,7 @@
 	},
 	"dependencies":    {
 		"@babel/polyfill":   "^7.0.0",
-		"@kirinnee/core":    "^0.7.2",
+		"@kirinnee/core":    "^0.7.5",
 		"@kirinnee/domex":   "^0.0.6",
 		"@kirinnee/elefact": "^0.0.2",
 		"@kirinnee/kease":   "^0.0.2",

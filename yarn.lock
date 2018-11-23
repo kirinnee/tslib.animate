@@ -103,6 +103,11 @@
   resolved "https://registry.yarnpkg.com/@kirinnee/core/-/core-0.7.3.tgz#ffb6e52578ebc50e7298b644238019f25e7f540e"
   integrity sha512-0RFfaMO3vdQ0ZBI+xsapF3Xnw26exeGuNCf8Ga5yGLn2LS69R6V+0UXmGAhjpB5b5h1/pB/y6G95lPLjxYd6eA==
 
+"@kirinnee/core@^0.7.5":
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/@kirinnee/core/-/core-0.7.5.tgz#3f44e200c3487c188f8274a79ddb3c4ecdc70194"
+  integrity sha512-9YXVShQmvSxsKIHnwL0CsW/dve92nZw2gTLaCpZTBgW4bqvuZeDMf3V+XXWYmZfUZmH+29oLyYPTuXliV4HnWQ==
+
 "@kirinnee/domex@0.0.4":
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/@kirinnee/domex/-/domex-0.0.4.tgz#e186d5d7362121ec72ade0f008d889848f0277a3"
