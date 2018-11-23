@@ -1,5 +1,6 @@
 node_modules/
 .nyc_output/
+index.js
 coverage/
 .idea/*
 !.idea/runConfigurations
