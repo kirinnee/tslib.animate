@@ -1,38 +1,45 @@
 import {AnimationData, SynchronousAnimator, TextAnimation} from "../index";
-import {
-	DefaultAnimationData, DefaultTextAnimationData, ParseAnimationData, ParseTextAnimationData
-} from "./InternalDataTypes";
-import {EaseFactory} from "@kirinnee/kease";
+import {EaseFactory, kEasing} from "@kirinnee/kease";
 import {Core} from "@kirinnee/core";
 import {ElementFactory} from "@kirinnee/elefact";
 import {DOMEx} from "@kirinnee/domex";
 
 type Appendable = Element | string;
 
+interface DefaultAnimationData {
+	duration: number;
+	callback: Function;
+	ease: any;
+}
+
+interface DefaultTextAnimationData extends DefaultAnimationData {
+	color: string;
+	bold: boolean;
+	italics: boolean;
+	underline: boolean;
+	append: boolean;
+	newLine: boolean;
+}
+
+
 class GSAPSyncAnimator implements SynchronousAnimator {
 	
-	private readonly namespace: string;
 	private readonly TweenLite: any;
 	private readonly easeFactory: EaseFactory;
 	private readonly eleFactory: ElementFactory;
 	private readonly core: Core;
 	
-	constructor(namespace: string, TweenLite: any, easeFactory: EaseFactory, eleFact: ElementFactory, domex: DOMEx, core: Core) {
+	constructor(TweenLite: any, TextPlugin: any, easeFactory: EaseFactory, eleFact: ElementFactory, domex: DOMEx, core: Core) {
 		core.AssertExtend();
 		domex.AssertExtend();
-		this.namespace = namespace;
 		this.TweenLite = TweenLite;
 		this.easeFactory = easeFactory;
 		this.eleFactory = eleFact;
 		this.core = core;
 	}
 	
-	get Namespace(): string {
-		return this.namespace;
-	}
-	
 	AnimateText(e: Element, text: string, data: TextAnimation = {}): Element {
-		let d: DefaultTextAnimationData = ParseTextAnimationData(data, this.easeFactory);
+		let d: DefaultTextAnimationData = this.ParseTextAnimationData(data, this.easeFactory);
 		
 		let span = this.eleFactory.SPAN().Style('color', d.color)
 			.Style('font-weight', d.bold ? "900" : "400")
@@ -43,10 +50,36 @@ class GSAPSyncAnimator implements SynchronousAnimator {
 		if (!d.newLine) elements = elements.Skip(1);
 		if (!d.append) e.innerHTML = "";
 		e.Append(elements);
-		this.TweenLite.to(span, d.duration, {
+		this.TweenLite.to(span, d.duration / 1000, {
 			text: text, immediateRender: true, ease: d.ease, onComplete: d.callback
 		});
 		return e;
+	}
+	
+	Brightness(e: Element, ori: number, to: number, data ?: AnimationData): Element {
+		let $ = (q: string): Element => e.querySelector('.brightness-filter feFunc' + q)!;
+		let target: Element[] = this.is(e) ? [$('R'), $('G'), $('B')] : [e];
+		let ele: any = e as any;
+		let update = this.is(e) ? () => target.Each(s => s.Attr('slope', ele.SecretFilterData.bright)) : () => {
+			let n: string = `brightness(${ele.SecretFilterData.bright * 100}%)`;
+			target.Each(s => s.Style('filter', n).Style('-webkit-filter', n));
+		};
+		return this.af(e, "bright", ori.toString(), to.toString(), update, data);
+	}
+	
+	Contrast(e: Element, ori: number, to: number, data ?: AnimationData): Element {
+		let $ = (q: string): Element => e.querySelector('.contrast-filter feFunc' + q)!;
+		let target: Element[] = this.is(e) ? [$('R'), $('G'), $('B')] : [e];
+		let ele: any = e as any;
+		let update = this.is(e) ? () => {
+			let contrast: number = ele.SecretFilterData.contrast;
+			let val: string = `${0.5 - 0.5 * contrast}`;
+			target.Each(s => s.Attr('slope', `${contrast}`).Attr('intercept', val));
+		} : () => {
+			let n: string = `contrast(${ele.SecretFilterData.contrast * 100}%)`;
+			target.Each(s => s.Style('filter', n).Style('-webkit-filter', n));
+		};
+		return this.af(e, "contrast", ori.toString(), to.toString(), update, data);
 	}
 	
 	BackgroundColor(e: Element, ori: string, to: string, data ?: AnimationData): Element {
@@ -64,36 +97,6 @@ class GSAPSyncAnimator implements SynchronousAnimator {
 		
 	}
 	
-	Brightness(e: Element, ori: number, to: number, data ?: AnimationData): Element {
-		let target: Element = this.is(e) ? e.querySelector('feGaussianBlur')! : e;
-		let ele: any = e as any;
-		let update = this.is(e) ? () => target.Attr('stdDeviation', ele.SecretFilterData.blur) : () => {
-			let n: string = `blur(${ele.SecretFilterData.blur}px)`;
-			target.Style('filter', n);
-			target.Style('-webkit-filter', n);
-		};
-		return this.af(e, "blur", ori.toString(), to.toString(), update, data);
-	}
-	
-	Contrast(e: Element, ori: number, to: number, data ?: AnimationData): Element {
-		let $ = (q: string): Element => e.querySelector(q)!;
-		let target: Element[] = this.is(e) ? [$('.contrast-filter feFuncR'), $('.contrast-filter feFuncG'), $('.contrast-filter feFuncB')] : [e];
-		let ele: any = e as any;
-		let update = this.is(e) ? () => {
-			let contrast: number = ele.SecretFilterData.contrast;
-			let val: string = `${0.5 - 0.5 * contrast}`;
-			target.Each(s => s.Attr('slope', `${contrast}`).Attr('intercept', val));
-		} : () => {
-			let n: string = `contrast(${ele.SecretFilterData.contrast * 100}%)`;
-			target.Each(s => s.Style('filter', n).Style('-webkit-filter', n));
-		};
-		return this.af(e, "contrast", ori.toString(), to.toString(), update, data);
-	}
-	
-	FontColor(e: Element, ori: string, to: string, data ?: AnimationData): Element {
-		return this.a(e, 'color', ori, to, data);
-	}
-	
 	Greyscale(e: Element, ori: number, to: number, data ?: AnimationData): Element {
 		ori = ori.Clamp(0, 1);
 		to = to.Clamp(0, 1);
@@ -107,13 +110,9 @@ class GSAPSyncAnimator implements SynchronousAnimator {
 	                 0 0 0 1 0`)
 		} : () => {
 			let gray: string = `grayscale(${ele.SecretFilterData.grayscale * 100}%)`;
-			ele.Css('filter', gray).Css('-webkit-filter', gray);
+			ele.Style('filter', gray).Style('-webkit-filter', gray);
 		};
 		return this.af(e, "grayscale", ori.toString(), to.toString(), update, data);
-	}
-	
-	H(e: Element, ori: string | number, to: string | number, data ?: AnimationData): Element {
-		return this.a(e, 'height', this.ts(ori), this.ts(to), data);
 	}
 	
 	HueRotation(e: Element, ori: number, to: number, data ?: AnimationData): Element {
@@ -122,9 +121,36 @@ class GSAPSyncAnimator implements SynchronousAnimator {
 		let ele: any = e;
 		let update = this.is(e) ? () => target.Attr('values', `${ele.SecretFilterData.hue}`) : () => {
 			let hue: string = `hue-rotate(${ele.SecretFilterData.hue}deg)`;
-			ele.Css('filter', hue).Css('-webkit-filter', hue);
+			ele.Style('filter', hue).Style('-webkit-filter', hue);
 		};
 		return this.af(e, "hue", ori.toString(), to.toString(), update, data);
+	}
+	
+	FontColor(e: Element, ori: string, to: string, data ?: AnimationData): Element {
+		return this.a(e, 'color', ori, to, data);
+	}
+	
+	Opacity(e: Element, ori: number, to: number, data ?: AnimationData): Element {
+		return this.a(e, 'opacity', ori.toString(), to.toString(), data);
+	}
+	
+	H(e: Element, ori: string | number, to: string | number, data ?: AnimationData): Element {
+		return this.a(e, 'height', this.ts(ori), this.ts(to), data);
+	}
+	
+	private ParseTextAnimationData(raw: TextAnimation, easeFactory: EaseFactory): DefaultTextAnimationData {
+		let def: DefaultAnimationData = this.ParseAnimationData(raw, easeFactory);
+		return {
+			duration: def.duration,
+			callback: def.callback,
+			ease: def.ease,
+			color: raw.color || "black",
+			bold: raw.bold || false,
+			italics: raw.bold || false,
+			underline: raw.underline || false,
+			append: raw.append || false,
+			newLine: raw.newLine || false
+		}
 	}
 	
 	Invert(e: Element, ori: number, to: number, data ?: AnimationData): Element {
@@ -145,8 +171,12 @@ class GSAPSyncAnimator implements SynchronousAnimator {
 		return this.af(e, "invert", ori.toString(), to.toString(), update, data);
 	}
 	
-	Opacity(e: Element, ori: number, to: number, data ?: AnimationData): Element {
-		return this.a(e, 'opacity', this.ts(ori), this.ts(to), data);
+	private ParseAnimationData(raw: AnimationData, easeFactory: EaseFactory): DefaultAnimationData {
+		let ease: kEasing = raw.ease || easeFactory.Constant();
+		let callback: Function = () => {};
+		return {
+			duration: raw.duration || 0, callback: raw.callback || callback, ease: ease.Get()
+		};
 	}
 	
 	Rotate(e: Element, ori: number, to: number, data ?: AnimationData): Element {
@@ -227,7 +257,7 @@ class GSAPSyncAnimator implements SynchronousAnimator {
 	 * @param data animation data
 	 */
 	private a(e: Element, key: string, ori: string, to: string, data: AnimationData = {}): Element {
-		let d: DefaultAnimationData = ParseAnimationData(data, this.easeFactory);
+		let d: DefaultAnimationData = this.ParseAnimationData(data, this.easeFactory);
 		let fromData: any = {};
 		fromData[key] = ori;
 		let toData: any = {
@@ -252,7 +282,7 @@ class GSAPSyncAnimator implements SynchronousAnimator {
 	 */
 	private af(e: Element, type: string, ori: string, to: string, update: Function, data: AnimationData = {}): Element {
 		this.s(e);
-		let def: DefaultAnimationData = ParseAnimationData(data, this.easeFactory);
+		let def: DefaultAnimationData = this.ParseAnimationData(data, this.easeFactory);
 		let filters: any = (e as any).SecretFilterData;
 		filters[type] = ori;
 		

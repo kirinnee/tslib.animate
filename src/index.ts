@@ -1,5 +1,6 @@
 import {kEasing} from "@kirinnee/kease";
 import {GSAPSyncAnimator} from "./classLibrary/GSAPSyncAnimator";
+import {GSAPAsyncAnimator} from "./classLibrary/GSAPAsyncAnimator";
 
 interface AnimationData {
 	duration?: number;
@@ -17,7 +18,6 @@ interface TextAnimation extends AnimationData {
 }
 
 interface SynchronousAnimator {
-	Namespace: string;
 	
 	X(e: Element, ori: string | number, to: string | number, data?: AnimationData): Element;
 	
@@ -63,7 +63,6 @@ interface SynchronousAnimator {
 }
 
 interface AsynchronousAnimator {
-	Namespace: string;
 	
 	X(e: Element, ori: string | number, to: string | number, data?: AnimationData): Promise<Element>;
 	
@@ -109,5 +108,5 @@ interface AsynchronousAnimator {
 }
 
 export {
-	AnimationData, TextAnimation, SynchronousAnimator, AsynchronousAnimator, GSAPSyncAnimator,
+	AnimationData, TextAnimation, SynchronousAnimator, AsynchronousAnimator, GSAPSyncAnimator, GSAPAsyncAnimator
 }
