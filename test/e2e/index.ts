@@ -42,10 +42,15 @@ $("test-area").Append([specialBox, normalBox, textbox]).Style('float', 'left');
 $("starto")
 	.Click(async () => {
 		let ele = $("text-box");
-		
-		
 		await asyncAnimator.Wait(ele, {duration: 1000, callback: () => console.log('wait finished!')});
-		await asyncAnimator.AnimateText(ele, " my name is ernest", {duration: 1000, append: true});
+		await asyncAnimator.AnimateText(ele, " my name is ernest", {
+			opacity: 0.5,
+			duration: 1000,
+			append: true,
+			fontSize: '3vw',
+			color: 'pink',
+			fontFamily: 'Black Han Sans'
+		});
 		await asyncAnimator.BackgroundColor(ele, "white", "black", {duration: 1000});
 		await asyncAnimator.FontColor(ele, "black", "blue", {duration: 1000});
 	})

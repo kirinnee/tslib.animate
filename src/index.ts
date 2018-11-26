@@ -27,6 +27,18 @@ interface AnimationData {
  */
 interface TextAnimation extends AnimationData {
 	/**
+	 * Text Opacity
+	 */
+	opacity?: number;
+	/**
+	 * Font family for pre-installed fonts
+	 */
+	fontFamily?: string;
+	/**
+	 * Font size of the text
+	 */
+	fontSize?: string;
+	/**
 	 * The color of the text. Can be in #six-char, rgb(r,g,b), or HTML accepted colors like "black".
 	 * Default is black
 	 */

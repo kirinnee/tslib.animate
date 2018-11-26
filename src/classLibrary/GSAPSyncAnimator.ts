@@ -13,6 +13,9 @@ interface DefaultAnimationData {
 }
 
 interface DefaultTextAnimationData extends DefaultAnimationData {
+	opacity: number;
+	fontFamily: string;
+	fontSize: string;
 	color: string;
 	bold: boolean;
 	italics: boolean;
@@ -46,11 +49,15 @@ class GSAPSyncAnimator implements SynchronousAnimator {
 	AnimateText(e: Element, text: string, data: TextAnimation = {}): Element {
 		let d: DefaultTextAnimationData = this.pt(data);
 		
-		let span = this.elf.SPAN().Style('color', d.color)
-			.Style('font-weight', d.bold ? "900" : "400")
-			.Style('font-style', d.italics ? 'oblique' : 'none')
-			.Style('text-decoration', d.underline ? 'underline' : 'none');
-		
+		let span = this.elf.SPAN().Style({
+			color: d.color,
+			opacity: d.opacity.toString(),
+			'font-weight': d.bold ? '900' : '400',
+			'font-style': d.italics ? 'oblique' : 'none',
+			'text-decoration': d.underline ? 'underline' : 'none',
+			'font-family': d.fontFamily,
+			'font-size': d.fontSize
+		});
 		let elements: Appendable[] = ["<br>", span];
 		if (!d.newLine) elements = elements.Skip(1);
 		if (!d.append) e.innerHTML = "";
@@ -225,6 +232,9 @@ ${0.2126 - 0.2126 * (1 - gs)} ${0.7152 - 0.7152 * (1 - gs)} ${0.0722 + 0.9278 * 
 	private pt(raw: TextAnimation): DefaultTextAnimationData {
 		let def: DefaultAnimationData = this.pa(raw);
 		return {
+			opacity: raw.opacity || 1,
+			fontFamily: raw.fontFamily || 'sans-serif',
+			fontSize: raw.fontSize || '12px',
 			duration: def.duration,
 			callback: def.callback,
 			ease: def.ease,

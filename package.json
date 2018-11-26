@@ -25,12 +25,12 @@
 		"major": "node script publish major"
 	},
 	"dependencies": {
-		"@babel/polyfill": "^7.0.0",
-		"@kirinnee/core": "^0.7.5",
-		"@kirinnee/domex": "^0.0.6",
+		"@babel/polyfill":   "^7.0.0",
+		"@kirinnee/core":    "^0.7.5",
+		"@kirinnee/domex":   "^0.0.7",
 		"@kirinnee/elefact": "^0.0.2",
-		"@kirinnee/kease": "^0.0.2",
-		"dom4": "^2.1.3"
+		"@kirinnee/kease":   "^0.0.2",
+		"dom4":              "^2.1.3"
 	},
 	"devDependencies": {
 		"@types/chai": "^4.1.6",
