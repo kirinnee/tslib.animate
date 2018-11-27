@@ -96,6 +96,14 @@ class GSAPAsyncAnimator implements AsynchronousAnimator {
 		return this.p("Wait", [], e, data);
 	}
 	
+	BorderColor(e: Element, ori: string, to: string, data?: AnimationData): Promise<Element> {
+		return this.p('BorderColor', [ori, to], e, data);
+	}
+	
+	BorderRadius(e: Element, ori: number | string, to: number | string, data?: AnimationData): Promise<Element> {
+		return this.p('BorderRadius', [ori, to], e, data);
+	}
+	
 	private p(type: string, args: any[], e: Element, data: AnimationData = {}) {
 		return new Promise<Element>((resolve: (e: Element) => void) => {
 			let original: Function = data.callback || (() => {});
@@ -107,6 +115,8 @@ class GSAPAsyncAnimator implements AsynchronousAnimator {
 			(this.sync as any)[type].apply(this.sync, arg);
 		});
 	}
+	
+	
 }
 
 export {GSAPAsyncAnimator};

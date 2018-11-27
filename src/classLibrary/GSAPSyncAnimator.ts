@@ -93,6 +93,14 @@ class GSAPSyncAnimator implements SynchronousAnimator {
 		return this.a(e, 'width', this.ts(ori), this.ts(to), data);
 	}
 	
+	BorderColor(e: Element, ori: string, to: string, data?: AnimationData): Element {
+		return this.a(e, 'borderColor', ori, to, data);
+	}
+	
+	BorderRadius(e: Element, ori: number | string, to: number | string, data?: AnimationData): Element {
+		return this.a(e, 'borderRadius', this.ts(ori), this.ts(to), data);
+	}
+	
 	Rotate(e: Element, ori: number, to: number, data ?: AnimationData): Element {
 		return this.a(e, 'rotation', ori + "deg", to + "deg", data);
 	}

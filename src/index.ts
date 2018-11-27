@@ -299,6 +299,26 @@ interface SynchronousAnimator {
 	 * @constructor
 	 */
 	HueRotation(e: Element, ori: number, to: number, data?: AnimationData): Element;
+	
+	/**
+	 *Animates the border radius change
+	 * @param e the element to animate
+	 * @param ori the starting border radius value
+	 * @param to the final border radius value
+	 * @param data the animation options
+	 * @constructor
+	 */
+	BorderRadius(e: Element, ori: number | string, to: number | string, data?: AnimationData): Element;
+	
+	/**
+	 *Animates the border color
+	 * @param e the element to animate
+	 * @param ori the starting color of the border
+	 * @param to the final color of the border
+	 * @param data the animation options
+	 * @constructor
+	 */
+	BorderColor(e: Element, ori: string, to: string, data?: AnimationData): Element;
 }
 
 interface AsynchronousAnimator {
@@ -530,6 +550,26 @@ interface AsynchronousAnimator {
 	 * @constructor
 	 */
 	HueRotation(e: Element, ori: number, to: number, data?: AnimationData): Promise<Element>;
+	
+	/**
+	 *Animates the border radius change
+	 * @param e the element to animate
+	 * @param ori the starting border radius value
+	 * @param to the final border radius value
+	 * @param data the animation options
+	 * @constructor
+	 */
+	BorderRadius(e: Element, ori: number | string, to: number | string, data?: AnimationData): Promise<Element>;
+	
+	/**
+	 *Animates the border color
+	 * @param e the element to animate
+	 * @param ori the starting color of the border
+	 * @param to the final color of the border
+	 * @param data the animation options
+	 * @constructor
+	 */
+	BorderColor(e: Element, ori: string, to: string, data?: AnimationData): Promise<Element>;
 }
 
 export {
