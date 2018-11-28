@@ -11,7 +11,7 @@ interface DefaultAnimationData {
 	callback: Function;
 	ease: any;
 	data?: any;
-	
+	speed: number;
 }
 
 interface DefaultTextAnimationData extends DefaultAnimationData {
@@ -45,7 +45,13 @@ class GSAPSyncAnimator implements SynchronousAnimator {
 	
 	Wait(e: Element, data: AnimationData = {}): Element {
 		let d: DefaultAnimationData = this.pa(data);
-		this.tl.to(e, d.duration, {onComplete: d.callback, immediateRender: true, ease: d.ease, data: d.data});
+		let tween = this.tl.to(e, d.duration, {
+			onComplete: d.callback,
+			immediateRender: true,
+			ease: d.ease,
+			data: d.data
+		});
+		tween.timeScale(d.speed);
 		return e;
 	}
 	AnimateText(e: Element, text: string, data: TextAnimation = {}): Element {
@@ -64,9 +70,10 @@ class GSAPSyncAnimator implements SynchronousAnimator {
 		if (!d.newLine) elements = elements.Skip(1);
 		if (!d.append) e.innerHTML = "";
 		e.Append(elements);
-		this.tl.to(span, d.duration, {
+		let tween = this.tl.to(span, d.duration, {
 			text: text, immediateRender: true, ease: d.ease, onComplete: d.callback, data: d.data
 		});
+		tween.timeScale(d.speed);
 		return e;
 	}
 	
@@ -210,7 +217,8 @@ ${0.2126 - 0.2126 * (1 - gs)} ${0.7152 - 0.7152 * (1 - gs)} ${0.0722 + 0.9278 * 
 			data: def.data
 		};
 		animationData[type] = to;
-		this.tl.to(filters, def.duration, animationData);
+		let tween = this.tl.to(filters, def.duration, animationData);
+		tween.timeScale(def.speed);
 		return e;
 	}
 	/**
@@ -246,6 +254,7 @@ ${0.2126 - 0.2126 * (1 - gs)} ${0.7152 - 0.7152 * (1 - gs)} ${0.0722 + 0.9278 * 
 	private pt(raw: TextAnimation): DefaultTextAnimationData {
 		let def: DefaultAnimationData = this.pa(raw);
 		return {
+			speed: def.speed,
 			data: def.data,
 			opacity: raw.opacity || 1,
 			fontFamily: raw.fontFamily || 'sans-serif',
@@ -270,6 +279,7 @@ ${0.2126 - 0.2126 * (1 - gs)} ${0.7152 - 0.7152 * (1 - gs)} ${0.0722 + 0.9278 * 
 		let ease: kEasing = raw.ease || this.ef.Constant();
 		let callback: Function = () => {};
 		return {
+			speed: raw.speed == null ? 1 : raw.speed,
 			duration: raw.duration == null ? 0 : raw.duration / 1000,
 			callback: raw.callback || callback,
 			ease: ease.Get(),
@@ -301,7 +311,8 @@ ${0.2126 - 0.2126 * (1 - gs)} ${0.7152 - 0.7152 * (1 - gs)} ${0.0722 + 0.9278 * 
 			onComplete: d.callback, immediateRender: true, ease: d.ease, data: d.data
 		};
 		toData[key] = to;
-		this.tl.fromTo(e, d.duration, fromData, toData);
+		let tween = this.tl.fromTo(e, d.duration, fromData, toData);
+		tween.timeScale(d.speed);
 		return e;
 	}
 	

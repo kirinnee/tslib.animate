@@ -24,6 +24,10 @@ interface AnimationData {
 	 * Additional data to bind to the animation object
 	 */
 	data?: any;
+	/**
+	 * Time Scale
+	 */
+	speed?: number;
 }
 
 /**
