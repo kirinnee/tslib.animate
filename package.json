@@ -1,6 +1,6 @@
 {
 	"name": "@kirinnee/animate",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"description": "Cross-browser animation interface that includes filter animations. Uses GSAP underneath",
 	"main": "index.js",
 	"license": "MIT",
