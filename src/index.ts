@@ -20,6 +20,10 @@ interface AnimationData {
 	 * Default is constant
 	 */
 	ease?: kEasing;
+	/**
+	 * Additional data to bind to the animation object
+	 */
+	data?: any;
 }
 
 /**

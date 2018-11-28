@@ -10,6 +10,8 @@ interface DefaultAnimationData {
 	duration: number;
 	callback: Function;
 	ease: any;
+	data?: any;
+	
 }
 
 interface DefaultTextAnimationData extends DefaultAnimationData {
@@ -43,7 +45,7 @@ class GSAPSyncAnimator implements SynchronousAnimator {
 	
 	Wait(e: Element, data: AnimationData = {}): Element {
 		let d: DefaultAnimationData = this.pa(data);
-		this.tl.to(e, d.duration, {onComplete: d.callback, immediateRender: true, ease: d.ease});
+		this.tl.to(e, d.duration, {onComplete: d.callback, immediateRender: true, ease: d.ease, data: d.data});
 		return e;
 	}
 	AnimateText(e: Element, text: string, data: TextAnimation = {}): Element {
@@ -63,7 +65,7 @@ class GSAPSyncAnimator implements SynchronousAnimator {
 		if (!d.append) e.innerHTML = "";
 		e.Append(elements);
 		this.tl.to(span, d.duration, {
-			text: text, immediateRender: true, ease: d.ease, onComplete: d.callback
+			text: text, immediateRender: true, ease: d.ease, onComplete: d.callback, data: d.data
 		});
 		return e;
 	}
@@ -201,7 +203,11 @@ ${0.2126 - 0.2126 * (1 - gs)} ${0.7152 - 0.7152 * (1 - gs)} ${0.0722 + 0.9278 * 
 		};
 		
 		let animationData: any = {
-			ease: def.ease, immediateRender: true, onComplete: def.callback, onUpdate: update,
+			ease: def.ease,
+			immediateRender: true,
+			onComplete: def.callback,
+			onUpdate: update,
+			data: def.data
 		};
 		animationData[type] = to;
 		this.tl.to(filters, def.duration, animationData);
@@ -240,6 +246,7 @@ ${0.2126 - 0.2126 * (1 - gs)} ${0.7152 - 0.7152 * (1 - gs)} ${0.0722 + 0.9278 * 
 	private pt(raw: TextAnimation): DefaultTextAnimationData {
 		let def: DefaultAnimationData = this.pa(raw);
 		return {
+			data: def.data,
 			opacity: raw.opacity || 1,
 			fontFamily: raw.fontFamily || 'sans-serif',
 			fontSize: raw.fontSize || '12px',
@@ -265,7 +272,8 @@ ${0.2126 - 0.2126 * (1 - gs)} ${0.7152 - 0.7152 * (1 - gs)} ${0.0722 + 0.9278 * 
 		return {
 			duration: raw.duration == null ? 0 : raw.duration / 1000,
 			callback: raw.callback || callback,
-			ease: ease.Get()
+			ease: ease.Get(),
+			data: raw.data
 		};
 	}
 	
@@ -290,7 +298,7 @@ ${0.2126 - 0.2126 * (1 - gs)} ${0.7152 - 0.7152 * (1 - gs)} ${0.0722 + 0.9278 * 
 		let fromData: any = {};
 		fromData[key] = ori;
 		let toData: any = {
-			onComplete: d.callback, immediateRender: true, ease: d.ease
+			onComplete: d.callback, immediateRender: true, ease: d.ease, data: d.data
 		};
 		toData[key] = to;
 		this.tl.fromTo(e, d.duration, fromData, toData);

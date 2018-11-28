@@ -60,7 +60,7 @@ $("starto")
 		await asyncAnimator.FontColor(ele, "black", "blue", {duration: 1000});
 		await asyncAnimator.BorderColor(ele, 'black', 'red', {duration: 1000});
 		await asyncAnimator.BorderRadius(ele, 0, '50%', {duration: 1000});
-
+		
 	});
 // .Click(async () => {
 // 	let ele = $("special-box");
