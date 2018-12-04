@@ -66,7 +66,7 @@ class GSAPSyncAnimator implements SynchronousAnimator {
 			'font-family': d.fontFamily,
 			'font-size': d.fontSize
 		});
-		let elements: Appendable[] = ["<br>", span];
+		let elements: Appendable[] = [this.elf.BR(), span];
 		if (!d.newLine) elements = elements.Skip(1);
 		if (!d.append) e.innerHTML = "";
 		e.Append(elements);

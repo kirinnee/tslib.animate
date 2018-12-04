@@ -126,10 +126,10 @@
     "@kirinnee/core" "^0.7.2"
     dom4 "^2.1.3"
 
-"@kirinnee/elefact@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@kirinnee/elefact/-/elefact-0.0.2.tgz#476b0e32116761e93612ae74874e8e733c3685a4"
-  integrity sha512-7HOs45Z7skB27efnGtvNdu1FbhVehWd/k5ZMje+lAE2nclYCzTSY7pC7LmVBuNTChK1iQ4cQLz8Lh6QNfUbtuw==
+"@kirinnee/elefact@^0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@kirinnee/elefact/-/elefact-0.0.3.tgz#f6ea5e5b2bbf9d528bea6f44e052f2be8195bd9d"
+  integrity sha512-5dykv1hknllGhM8TfoHRrzaFleNz4fpHz5AYVmNR3DXOreoIKOs4jK00L9NO0jPgFuJB2WTf90x5F6ED7Vn7BQ==
   dependencies:
     "@babel/polyfill" "^7.0.0"
     "@kirinnee/domex" "0.0.4"
