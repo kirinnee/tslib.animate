@@ -2,6 +2,10 @@
 
 Cross-browser animation interface that includes filter animations. Uses GSAP underneath
 
+Source: [GitLab](https://gitlab.com/node-packages-kirin/animate)
+
+Mirror: [GitHub](https://github.com/kirinnee/tslib.animate)
+
 # Getting Started
 
 Install via NPM 
